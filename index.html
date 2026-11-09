@@ -19,7 +19,7 @@ html{scroll-behavior:smooth;scroll-padding-top:80px}
 body{margin:0;background:var(--white);color:var(--text);font-family:var(--f-body);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:20;background:var(--white)}
 .wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-@media(min-width:900px){.wrap{padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}}
+@media(min-width:780px){.wrap{padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}}
 a{color:inherit}
 :focus-visible{outline:3px solid var(--flamingo);outline-offset:2px}
 .kicker{font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson)}
@@ -101,7 +101,7 @@ a{color:inherit}
 
 /* team */
 .mxwrap{overflow-x:auto}
-.mx{width:100%;min-width:900px;border-collapse:collapse;font-size:15px;table-layout:fixed}
+.mx{width:100%;min-width:780px;border-collapse:collapse;font-size:15px;table-layout:fixed}
 .mx th{font-family:var(--f-head);font-weight:700;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 14px 0;border-bottom:1.5px solid var(--velvet);vertical-align:bottom}
 .mx th.num{text-align:right}
 .mx td{padding:22px 14px 22px 0;border-bottom:1px solid var(--rule);vertical-align:top}
@@ -222,12 +222,12 @@ footer .logo{width:88px;color:var(--crimson)}
 <section class="sec wrap" id="doi-hinh" aria-labelledby="h-team">
   <div class="sec-head"><span class="kicker">Nhân sự</span><h2 id="h-team">Đội hình triển khai</h2><p>Mỗi người phụ trách những kênh nào và khối lượng bài đăng mỗi tuần.</p></div>
   <div class="mxwrap"><table class="mx">
-    <thead><tr><th style="width:220px">Người</th><th>Tiktok</th><th>Threads</th><th>Sàn &amp; KOL</th><th>Facebook &amp; IG</th><th>Web &amp; đại lý</th><th>AI</th><th class="num" style="width:110px">Bài/tuần</th></tr></thead>
+    <thead><tr><th style="width:220px">Người</th><th>Tiktok</th><th>Threads</th><th>Sàn &amp; KOL</th><th>Facebook &amp; IG</th><th>Web &amp; đại lý</th><th class="num" style="width:110px">Bài/tuần</th></tr></thead>
     <tbody>
-      <tr><td class="p"><i>P</i><div><b>Phương</b><small>Content &amp; video</small></div></td><td><span class="mk">Kigo, Ninemila</span></td><td><span class="mk">7 bài</span></td><td></td><td><span class="mk">4 page ads, IG Global</span></td><td><span class="mk">Đại lý 1 bài</span></td><td></td><td class="num">13–15</td></tr>
-      <tr><td class="p"><i>L</i><div><b>Linh</b><small>Fanpage &amp; Threads</small></div></td><td><span class="mk sup">Hỗ trợ Kigo</span></td><td><span class="mk">14 bài</span></td><td></td><td><span class="mk">2 fanpage, IG Ninemila</span></td><td><span class="mk">Đại lý 1 bài</span></td><td></td><td class="num">23</td></tr>
-      <tr><td class="p"><i>HD</i><div><b>Hà Digital</b><small>Tiktok, sàn, KOL</small></div></td><td><span class="mk">Kênh chị Loan</span></td><td></td><td><span class="mk">Tiktok Shop, KOL/KOC</span></td><td></td><td></td><td></td><td class="num na">Theo việc</td></tr>
-      <tr><td class="p"><i>T</i><div><b>Thủy</b><small>Sàn Shopee</small></div></td><td></td><td></td><td><span class="mk">Shopee</span></td><td></td><td></td><td></td><td class="num na">Theo việc</td></tr>
+      <tr><td class="p"><i>P</i><div><b>Phương</b><small>Content &amp; video</small></div></td><td><span class="mk">Kigo, Ninemila</span></td><td><span class="mk">7 bài</span></td><td></td><td><span class="mk">4 page ads, IG Global</span></td><td><span class="mk">Đại lý 1 bài</span></td><td class="num">13–15</td></tr>
+      <tr><td class="p"><i>L</i><div><b>Linh</b><small>Fanpage &amp; Threads</small></div></td><td><span class="mk sup">Hỗ trợ Kigo</span></td><td><span class="mk">14 bài</span></td><td></td><td><span class="mk">2 fanpage, IG Ninemila</span></td><td><span class="mk">Đại lý 1 bài</span></td><td class="num">23</td></tr>
+      <tr><td class="p"><i>HD</i><div><b>Hà Digital</b><small>Tiktok, sàn, KOL</small></div></td><td><span class="mk">Kênh chị Loan</span></td><td></td><td><span class="mk">Tiktok Shop, KOL/KOC</span></td><td></td><td></td><td class="num na">Theo việc</td></tr>
+      <tr><td class="p"><i>T</i><div><b>Thủy</b><small>Sàn Shopee</small></div></td><td></td><td></td><td><span class="mk">Shopee</span></td><td></td><td></td><td class="num na">Theo việc</td></tr>
       </tbody></table></div>
   <div class="legend"><span class="mk">Phụ trách chính</span><span class="mk sup">Hỗ trợ</span></div>
 </section>
