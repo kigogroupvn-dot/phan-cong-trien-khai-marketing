@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<title>Slide Phân công Marketing</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Philosopher:wght@400;700&family=Mona+Sans:wght@400;500;600;700&display=swap">
+<style>
+@font-face{font-family:"SVN Gilroy";src:url("../fonts/gilroy-bold.otf") format("opentype");font-weight:700;font-display:swap}
+@font-face{font-family:"SVN Gilroy";src:url("../fonts/gilroy-black.otf") format("opentype");font-weight:900;font-display:swap}
+@font-face{font-family:"Photograph Signature";src:url("../fonts/photograph-signature.otf") format("opentype");font-display:swap}
+/* Layout: a real deck. Desktop: slide list on the left, one 1600×900 slide scaled to fit. Phone: slides stack as reading pages. Editorial restraint: white pages, hairline rules, Philosopher titles, Gilroy figures, crimson only on the cover panel, kickers and key numbers (~30%). Always light. */
+:root{
+  --crimson:#AC2436; --velvet:#8E0F0B; --misty:#FDE3DD; --flamingo:#F9BAB7; --white:#FFFFFF;
+  --text:#353535; --muted:#76696B; --grey:#C9C9C9; --rule:#EAD7D2; --paper:#FBF7F6;
+  --f-title:"Philosopher",Georgia,serif;
+  --f-head:"SVN Gilroy","Mona Sans",system-ui,sans-serif;
+  --f-body:"Mona Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-script:"Photograph Signature","Brush Script MT",cursive;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--text);font-family:var(--f-body);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--flamingo);outline-offset:2px}
+
+/* ---------- APP SHELL (desktop) ---------- */
+.app{display:grid;grid-template-columns:260px 1fr;height:100%}
+.rail{background:var(--white);border-right:1px solid var(--rule);display:flex;flex-direction:column;padding:28px 0 20px;min-height:0}
+.rail .brand{padding:0 28px 22px;border-bottom:1px solid var(--rule)}
+.rail .brand svg{width:116px;height:auto;color:var(--crimson);display:block}
+.rail .brand .back{display:inline-block;margin-top:12px;font-size:12.5px;font-weight:600;color:var(--crimson);text-decoration:none}
+.rail .brand .back:hover{text-decoration:underline}
+.rail .brand small{display:block;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5}
+.toc{list-style:none;margin:0;padding:14px 0;overflow-y:auto;flex:1}
+.toc button{display:grid;grid-template-columns:30px 1fr;gap:8px;width:100%;text-align:left;background:none;border:none;padding:9px 28px;cursor:pointer;font-size:13.5px;line-height:1.35;color:var(--muted);border-left:3px solid transparent}
+.toc button:hover{color:var(--text);background:var(--paper)}
+.toc button[aria-current="true"]{color:var(--velvet);border-left-color:var(--crimson);background:var(--paper);font-weight:600}
+.toc .n{font-family:var(--f-head);font-weight:700;font-size:12px;color:var(--crimson);padding-top:1px;font-variant-numeric:tabular-nums}
+.rail .foot{padding:16px 28px 0;border-top:1px solid var(--rule);display:grid;gap:10px}
+.play{white-space:nowrap;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--crimson);color:var(--white);border:none;border-radius:8px;padding:11px 14px;font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:.06em;cursor:pointer}
+.play:hover{background:var(--velvet)}
+.updated{font-size:11.5px;color:var(--muted);line-height:1.5}
+
+.stagewrap{position:relative;min-width:0;min-height:0;display:grid;place-items:center;overflow:hidden}
+.stage{width:1600px;height:900px;position:absolute;left:50%;top:calc(50% - 22px);transform-origin:center center;transform:translate(-50%,-50%) scale(.5)}
+body.show .stage{top:50%}
+.nav{position:absolute;right:24px;bottom:18px;display:flex;align-items:center;gap:4px;background:var(--white);border:1px solid var(--rule);border-radius:999px;padding:4px;z-index:5}
+.nav button{width:36px;height:36px;border-radius:50%;border:none;background:none;cursor:pointer;font-size:16px;color:var(--velvet)}
+.nav button:hover{background:var(--misty)}
+.nav span{font-family:var(--f-head);font-weight:700;font-size:12px;min-width:52px;text-align:center;color:var(--muted);font-variant-numeric:tabular-nums}
+body.show .app{grid-template-columns:0 1fr}
+body.show .rail{display:none}
+body.show .stagewrap{background:#1d1416}
+
+/* ---------- SLIDE BASE ---------- */
+.slide{position:absolute;inset:0;background:var(--white);display:none;flex-direction:column;padding:80px 96px 0;box-shadow:0 1px 3px rgba(80,20,20,.06),0 20px 60px rgba(80,20,20,.08);overflow:hidden}
+.slide.on{display:flex}
+@media (prefers-reduced-motion:no-preference){.slide.on{animation:fade .35s ease-out}@keyframes fade{from{opacity:0}to{opacity:1}}}
+.kicker{font-family:var(--f-head);font-weight:700;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--crimson)}
+.slide h2{font-family:var(--f-title);font-weight:700;font-size:60px;line-height:1.08;color:var(--velvet);margin:14px 0 0;text-wrap:balance;max-width:1200px}
+.body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;padding-block:28px}
+.sfoot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--rule);padding:18px 0 22px;font-size:13px;color:var(--muted);margin-top:auto}
+.sfoot svg{width:70px;height:auto;color:var(--crimson)}
+.sfoot .pg{font-family:var(--f-head);font-weight:700;font-variant-numeric:tabular-nums;color:var(--velvet)}
+
+/* KPI strip */
+.kpis{display:flex;gap:0;margin-top:30px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.kpi{flex:1;padding:20px 28px 20px 0;display:grid;gap:4px}
+.kpi+.kpi{padding-left:28px;border-left:1px solid var(--rule)}
+.kpi b{font-family:var(--f-head);font-weight:900;font-size:44px;line-height:1;color:var(--crimson);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.kpi b.w{font-size:30px;padding-block:7px}
+.kpi span{font-size:16px;color:var(--text)}
+.kpi em{font-style:normal;font-size:13px;color:var(--muted)}
+
+/* Tables */
+.tbl{width:100%;border-collapse:collapse;font-size:18px}
+.tbl th{font-family:var(--f-head);font-weight:700;font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 20px 12px 0;border-bottom:1.5px solid var(--velvet)}
+.tbl td{padding:18px 20px 18px 0;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.45}
+.tbl td.ch{font-family:var(--f-title);font-weight:700;font-size:21px;color:var(--velvet);white-space:nowrap}
+.tbl td.fig{font-family:var(--f-head);font-weight:700;color:var(--text);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl td small{display:block;color:var(--muted);font-size:15px;margin-top:3px}
+.tbl .who{white-space:nowrap}
+.tbl .who i{font-style:normal;color:var(--muted);font-size:15px}
+.st{display:inline-flex;align-items:center;gap:8px;font-size:14.5px;font-weight:600;white-space:nowrap;color:var(--velvet)}
+.st::before{content:"";width:11px;height:11px;border-radius:50%;flex:none;box-sizing:border-box}
+.st.due::before{background:var(--crimson)}
+.st.run::before{border:2px solid var(--crimson);background:linear-gradient(90deg,var(--crimson) 50%,transparent 50%)}
+.st.hold{color:var(--muted)}.st.hold::before{border:2px solid var(--grey)}
+.st.done::before{background:var(--velvet);box-shadow:inset 0 0 0 2px var(--white),0 0 0 1.5px var(--velvet)}
+.prog{display:inline-block;margin-left:6px;font-family:var(--f-head);font-weight:700;color:var(--crimson)}
+
+/* ---------- COVER ---------- */
+.cover{padding:0;flex-direction:row}
+.cover .panel{width:560px;background:var(--crimson);color:var(--white);display:flex;flex-direction:column;justify-content:space-between;padding:80px 72px 64px}
+.cover .panel svg{width:260px;height:auto;color:var(--white)}
+.cover .panel .meta{display:grid;gap:18px;font-size:16px;color:var(--misty)}
+.cover .panel .meta b{display:block;font-family:var(--f-head);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--flamingo);margin-bottom:4px}
+.cover .panel .meta span{color:var(--white);font-size:19px}
+.cover .main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 110px}
+.cover h1{font-family:var(--f-title);font-weight:700;font-size:88px;line-height:1;color:var(--velvet);margin:22px 0 0;letter-spacing:-.01em}
+.cover .script{font-family:var(--f-script);font-size:92px;color:var(--crimson);display:block;margin:30px 0 0 8px;transform:rotate(-3deg);transform-origin:left;line-height:1}
+.cover .sub{margin:44px 0 0;font-size:22px;color:var(--muted);max-width:720px;line-height:1.5;border-top:1px solid var(--rule);padding-top:26px}
+
+/* ---------- OVERVIEW ---------- */
+.pillars{display:grid;grid-template-columns:repeat(4,1fr);gap:40px;margin-top:10px}
+.figs4{margin-top:48px}
+.pillar{border-top:3px solid var(--crimson);padding-top:24px;display:grid;gap:14px;align-content:start}
+.pillar.alt{border-top-color:var(--velvet)}
+.pillar .tag{font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--crimson)}
+.pillar h3{font-family:var(--f-title);font-size:32px;line-height:1.15;color:var(--velvet);margin:0}
+.pillar p{margin:0;font-size:18px;line-height:1.55;color:var(--text)}
+
+/* ---------- SALES ---------- */
+.split{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:start}
+.sis{border:1px solid var(--rule);padding:30px 34px;display:grid;gap:20px}
+.sis .big{display:flex;gap:48px}
+.sis .big div b{display:block;font-family:var(--f-head);font-weight:900;font-size:64px;line-height:1;color:var(--crimson)}
+.sis .big div span{font-size:15px;color:var(--muted)}
+.sis h3{font-family:var(--f-title);font-size:28px;color:var(--velvet);margin:0}
+.sis p{margin:0;font-size:17px;color:var(--muted);line-height:1.5}
+.line{display:grid;grid-template-columns:1fr auto;gap:6px 20px;padding:20px 0;border-bottom:1px solid var(--rule);align-items:baseline}
+.line:first-child{border-top:1px solid var(--rule)}
+.line b{font-family:var(--f-title);font-size:23px;color:var(--velvet)}
+.line p{grid-column:1/-1;margin:0;font-size:17px;color:var(--text);line-height:1.5}
+.line p:empty{display:none}
+.line .who{font-weight:600;font-size:16px}
+
+/* ---------- WEB ---------- */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
+.card3{border-top:1px solid var(--velvet);padding-top:24px;display:grid;gap:14px;align-content:start}
+.card3 .tag{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.card3 h3{font-family:var(--f-title);font-size:34px;color:var(--velvet);margin:0}
+.card3 p{margin:0;font-size:18px;line-height:1.55}
+.card3 .who{font-size:15px;color:var(--muted)}
+.card3 .who b{color:var(--text)}
+.card3 .meas{border-top:1px dashed var(--rule);padding-top:14px;font-size:15.5px;color:var(--muted);line-height:1.5}
+.card3 .meas b{display:block;font-family:var(--f-head);font-weight:700;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--crimson);margin-bottom:4px}
+.card3.off h3{color:var(--muted)}
+
+/* ---------- AI ---------- */
+.ai{display:grid;grid-template-columns:1fr 420px;gap:72px;align-items:stretch}
+.skill{display:grid;grid-template-columns:60px 1fr auto;gap:20px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--rule)}
+.skill:first-child{border-top:1px solid var(--rule)}
+.skill .k{font-family:var(--f-head);font-weight:900;font-size:24px;color:var(--flamingo)}
+.skill b{display:block;font-size:20px;font-weight:600}
+.skill small{display:block;font-size:15.5px;color:var(--muted);margin-top:2px}
+.event{background:var(--velvet);color:var(--white);padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:20px}
+.event .tag{font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--flamingo)}
+.event .d{font-family:var(--f-head);font-weight:900;font-size:120px;line-height:.9;letter-spacing:-.02em}
+.event .d small{display:block;font-size:22px;font-weight:700;letter-spacing:.08em;margin-top:14px;color:var(--misty)}
+.event p{margin:0;font-size:19px;line-height:1.5;color:var(--misty)}
+.event .st{color:var(--white)}.event .st.due::before{background:var(--flamingo)}
+
+/* ---------- TEAM MATRIX ---------- */
+.mx{width:100%;border-collapse:collapse;font-size:16px;table-layout:fixed}
+.mx th{font-family:var(--f-head);font-weight:700;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 14px 14px 0;border-bottom:1.5px solid var(--velvet);vertical-align:bottom}
+.mx th.num{text-align:right}
+.mx td{padding:18px 14px 18px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+.mx td.p b{display:block;font-family:var(--f-title);font-size:26px;color:var(--velvet);line-height:1.1}
+.mx td.p small{font-size:14px;color:var(--muted)}
+.mk{display:flex;gap:9px;align-items:flex-start;font-size:15px;line-height:1.35}
+.mk::before{content:"";flex:none;width:12px;height:15px;border-radius:50%;margin-top:2px;background:var(--crimson);box-sizing:border-box}
+.mk.sup::before{background:none;border:2px solid var(--crimson)}
+.mx td.num{text-align:right;font-family:var(--f-head);font-weight:900;font-size:34px;color:var(--crimson);font-variant-numeric:tabular-nums;white-space:nowrap}
+.mx td.num.na{font-size:15px;font-weight:700;color:var(--muted)}
+.legend{display:flex;gap:28px;margin-top:20px;font-size:14.5px;color:var(--muted)}
+
+/* ---------- TEAM + RHYTHM ---------- */
+.teamgrid{display:grid;grid-template-columns:1fr 380px;gap:56px;align-items:start}
+.sumbox{background:var(--misty);border-radius:110px 14px 14px 14px;padding:44px 34px 30px;display:grid;gap:6px}
+.sumbox>b{font-family:var(--f-head);font-weight:900;font-size:80px;line-height:.9;color:var(--crimson);letter-spacing:-.02em}
+.sumbox>span{font-size:18px;color:var(--velvet);font-weight:600}
+.sumbox ul{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:9px}
+.sumbox li{display:grid;grid-template-columns:1fr 110px 44px;gap:10px;align-items:center;font-size:14.5px}
+.sumbox li i{height:10px;background:var(--crimson);display:block}
+.sumbox li em{font-style:normal;font-family:var(--f-head);font-weight:900;color:var(--velvet);text-align:right}
+/* ---------- RHYTHM ---------- */
+.rhythm{display:grid;grid-template-columns:1fr 380px;gap:80px;align-items:center}
+.bars{display:grid;gap:22px}
+.brow{display:grid;grid-template-columns:270px 1fr 72px;gap:22px;align-items:center}
+.brow .n b{display:block;font-size:19px;font-weight:600}
+.brow .n small{font-size:14.5px;color:var(--muted)}
+.track{height:30px;position:relative;background:repeating-linear-gradient(90deg,var(--rule) 0 1px,transparent 1px 20%)}
+.track i{position:absolute;left:0;top:0;bottom:0;background:var(--crimson)}
+.track i.r{background:var(--flamingo)}
+.brow .v{font-family:var(--f-head);font-weight:900;font-size:28px;color:var(--velvet);text-align:right;font-variant-numeric:tabular-nums}
+.sum{border-left:1px solid var(--rule);padding-left:56px;display:grid;gap:10px}
+.sum b{font-family:var(--f-head);font-weight:900;font-size:110px;line-height:.9;color:var(--crimson);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.sum span{font-size:22px;color:var(--velvet);font-weight:600}
+.sum p{margin:6px 0 0;font-size:16px;color:var(--muted);line-height:1.5}
+
+/* ---------- ASKS ---------- */
+.asks{display:grid;grid-template-columns:1fr 440px;gap:72px;align-items:stretch}
+.ask{display:grid;grid-template-columns:64px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--rule)}
+.ask:first-child{border-top:1px solid var(--rule)}
+.ask .k{font-family:var(--f-head);font-weight:900;font-size:40px;line-height:1;color:var(--crimson)}
+.ask b{display:block;font-family:var(--f-title);font-size:27px;color:var(--velvet);line-height:1.2}
+.ask p{margin:6px 0 0;font-size:17px;color:var(--muted);line-height:1.5}
+.next{background:var(--misty);padding:40px;display:grid;gap:26px;align-content:start}
+.next .tag{font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--crimson)}
+.next div b{display:block;font-family:var(--f-title);font-size:28px;color:var(--velvet)}
+.next div p{margin:6px 0 0;font-size:17px;line-height:1.5;color:var(--text)}
+
+/* ---------- PHONE: reading mode ---------- */
+@media (max-width:900px){
+  .teamgrid{grid-template-columns:1fr;gap:28px}.sumbox{border-radius:70px 14px 14px 14px;padding:32px 22px 22px}.sumbox>b{font-size:56px}
+  .rail .brand .back{display:none}
+  html,body{height:auto}
+  .app{display:block}
+  .rail{position:sticky;top:0;z-index:10;flex-direction:row;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));border-right:none;border-bottom:1px solid var(--rule)}
+  .rail .brand{padding:0;border:none}.rail .brand svg{width:84px}.rail .brand small,.toc,.rail .foot .play{display:none}
+  .rail .foot{border:none;padding:0}
+  .stagewrap{display:block;overflow:visible}
+  .stage{position:static;width:auto;height:auto;transform:none!important;display:grid;gap:14px;padding:14px max(12px,env(safe-area-inset-right,0px)) 40px max(12px,env(safe-area-inset-left,0px))}
+  .nav{display:none}
+  .slide{position:relative;inset:auto;display:flex!important;padding:32px 20px 0;animation:none!important}
+  .slide h2{font-size:30px}.kicker{font-size:12px}
+  .body{padding-block:20px}
+  .kpis{flex-direction:column}.kpi,.kpi+.kpi{padding:14px 0;border-left:none}.kpi+.kpi{border-top:1px solid var(--rule)}
+  .kpi b{font-size:32px}.kpi b.w{font-size:22px;padding:0}
+  .tbl{font-size:15px}.tbl thead{display:none}.tbl,.tbl tbody,.tbl tr,.tbl td{display:block}
+  .tbl tr{padding:14px 0;border-bottom:1px solid var(--rule)}.tbl td{border:none;padding:3px 0}.tbl td.ch{font-size:19px;white-space:normal}
+  .cover{flex-direction:column}.cover .panel{width:auto;padding:32px 24px;gap:28px}.cover .panel svg{width:150px}
+  .cover .main{padding:36px 20px 40px}.cover h1{font-size:46px}.cover .script{font-size:50px}.cover .sub{font-size:16px;margin-top:24px}
+  .pillars,.trio,.split,.ai,.rhythm,.asks{grid-template-columns:1fr;gap:28px}
+  .figs4{margin-top:28px}
+  .pillar h3,.card3 h3{font-size:24px}.pillar p,.card3 p{font-size:16px}
+  .sis{padding:22px}.sis .big div b{font-size:44px}
+  .skill{grid-template-columns:36px 1fr}.skill>span:last-child{grid-column:2}
+  .event{padding:28px}.event .d{font-size:72px}
+  .mxwrap{overflow-x:auto}.mx{min-width:760px}
+  .brow{grid-template-columns:1fr 56px}.track{grid-column:1/-1;grid-row:2;height:18px}.brow .v{font-size:22px}
+  .sum{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:20px}.sum b{font-size:72px}
+  .next{padding:26px}
+  .ask b{font-size:21px}.ask{grid-template-columns:44px 1fr}.ask .k{font-size:30px}
+  .sfoot{padding:14px 0 18px;gap:10px}.sfoot>span:nth-child(2){display:none}
+}
+</style>
+
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="60 54 506 214"><path fill="currentColor" d="M 347.8125 149.964844 L 322.941406 121.890625 C 319.371094 117.859375 313.0625 117.902344 309.542969 121.980469 L 296.761719 136.789062 C 293.664062 140.382812 290.359375 143.789062 286.871094 147.003906 L 295.527344 147.003906 C 295.839844 144.585938 298.132812 141.808594 300.175781 139.445312 L 309.175781 129.027344 C 310.550781 127.433594 313.019531 127.421875 314.414062 129 L 341.035156 159.175781 L 341.914062 160.171875 C 341.910156 160.175781 341.90625 160.183594 341.902344 160.1875 C 334.429688 170.519531 324.15625 176.890625 312.828125 176.890625 C 289.953125 176.890625 271.402344 150.929688 271.402344 118.902344 C 271.402344 86.859375 289.953125 60.898438 312.828125 60.898438 C 335.699219 60.898438 354.25 86.859375 354.25 118.902344 C 354.25 130.328125 351.882812 140.976562 347.8125 149.964844 M 312.828125 58.214844 C 285.144531 58.214844 262.699219 85.390625 262.699219 118.902344 C 262.699219 152.414062 285.144531 179.574219 312.828125 179.574219 C 340.507812 179.574219 362.953125 152.414062 362.953125 118.902344 C 362.953125 85.390625 340.507812 58.214844 312.828125 58.214844 "/><path fill="currentColor" d="M 322.410156 91.421875 L 303.148438 115.480469 C 302.5 116.199219 301.308594 115.738281 301.308594 114.773438 L 301.308594 96.117188 L 301.351562 92.882812 C 301.351562 92.757812 301.351562 92.644531 301.359375 92.519531 C 301.359375 92.453125 301.359375 92.371094 301.371094 92.304688 C 301.453125 88.671875 302.015625 86 302.628906 84.132812 L 290.054688 84.132812 C 290.664062 86 291.21875 88.671875 291.3125 92.304688 C 291.324219 92.328125 291.324219 92.347656 291.324219 92.371094 C 291.332031 92.542969 291.34375 92.710938 291.34375 92.882812 L 291.34375 127.253906 C 291.34375 129.34375 293.546875 130.910156 295.402344 129.953125 C 295.957031 129.667969 296.542969 129.171875 297.019531 128.769531 C 298.566406 127.46875 299.78125 125.789062 301.316406 124.160156 L 327.675781 92.042969 C 328.375 91.238281 329.167969 90.367188 330.039062 89.464844 C 330.164062 89.328125 330.300781 89.191406 330.4375 89.054688 C 332.191406 87.277344 334.226562 85.46875 336.445312 84.132812 L 324.980469 84.132812 C 324.996094 87.390625 324 89.773438 322.410156 91.421875 "/><path fill="currentColor" d="M 98.714844 261.132812 L 80.878906 236.527344 L 94.699219 218.925781 C 95.308594 218.167969 95.765625 217.65625 96.105469 217.367188 L 96.273438 217.152344 L 97.472656 216.453125 L 89.515625 216.453125 L 89.359375 217.042969 C 88.96875 217.675781 88.617188 218.1875 88.308594 218.574219 L 74.261719 236.722656 L 74.261719 218.75 C 74.261719 217.820312 74.324219 217.441406 74.378906 217.285156 L 74.78125 216.453125 L 64.15625 216.453125 L 64.492188 217.089844 L 64.558594 217.28125 C 64.613281 217.441406 64.675781 217.824219 64.675781 218.75 L 64.675781 261.296875 C 64.675781 262.003906 64.632812 262.527344 64.550781 262.847656 L 64.496094 263.058594 L 64.085938 263.660156 L 74.613281 263.660156 L 74.378906 262.828125 C 74.324219 262.671875 74.261719 262.277344 74.261719 261.296875 L 74.261719 242.539062 L 87.699219 261.464844 C 88.171875 262.128906 88.472656 262.652344 88.597656 263.011719 L 88.78125 263.660156 L 100.921875 263.660156 L 99.953125 262.714844 C 99.742188 262.515625 99.328125 261.980469 98.714844 261.132812 "/><path fill="currentColor" d="M 127.84375 217.285156 L 128.242188 216.453125 L 117.554688 216.453125 L 117.886719 217.089844 L 117.953125 217.285156 C 118.078125 217.640625 118.136719 218.132812 118.136719 218.75 L 118.136719 261.296875 C 118.136719 261.957031 118.078125 262.472656 117.953125 262.828125 L 117.722656 263.660156 L 128.105469 263.660156 L 127.828125 262.789062 C 127.765625 262.667969 127.660156 262.308594 127.660156 261.296875 L 127.660156 218.75 C 127.660156 218.132812 127.71875 217.640625 127.84375 217.285156 "/><path fill="currentColor" d="M 228.46875 220.265625 C 237.808594 220.265625 242.542969 226.890625 242.542969 239.957031 C 242.542969 251.296875 239.113281 257.792969 232.347656 259.269531 C 230.863281 259.609375 229.445312 259.78125 228.136719 259.78125 C 223.890625 259.78125 220.554688 258.140625 218.214844 254.902344 C 215.726562 251.511719 214.464844 246.480469 214.464844 239.957031 C 214.464844 226.890625 219.175781 220.265625 228.46875 220.265625 M 228.46875 215.738281 C 220.8125 215.738281 214.804688 217.863281 210.605469 222.050781 C 206.40625 226.234375 204.277344 232.28125 204.277344 240.023438 C 204.277344 247.71875 206.40625 253.746094 210.605469 257.933594 C 214.804688 262.121094 220.8125 264.242188 228.46875 264.242188 C 236.171875 264.242188 242.203125 262.121094 246.402344 257.933594 C 250.601562 253.746094 252.730469 247.699219 252.730469 239.957031 C 252.730469 232.261719 250.601562 226.234375 246.402344 222.050781 C 242.203125 217.863281 236.171875 215.738281 228.46875 215.738281 "/><path fill="currentColor" d="M 371.972656 230.035156 C 371.972656 232.785156 371.0625 234.949219 369.269531 236.464844 C 367.457031 237.992188 364.847656 238.789062 361.503906 238.828125 L 360.71875 238.828125 C 360.507812 238.804688 360.332031 238.789062 360.1875 238.777344 L 360.1875 220.851562 L 362.375 220.851562 C 367.832031 220.851562 370.882812 223 371.710938 227.425781 C 371.882812 228.363281 371.972656 229.238281 371.972656 230.035156 M 385.425781 262.730469 C 384.941406 262.085938 384.519531 261.550781 384.171875 261.128906 L 369.6875 241.710938 C 373.074219 241.035156 375.867188 239.800781 377.984375 238.035156 C 380.53125 235.871094 381.824219 233.046875 381.824219 229.644531 C 381.824219 228.328125 381.617188 226.949219 381.210938 225.546875 C 379.804688 220.652344 375.839844 217.660156 369.429688 216.648438 C 368.304688 216.476562 367.277344 216.386719 366.378906 216.386719 L 350.21875 216.453125 L 350.550781 217.089844 L 350.609375 217.25 C 350.691406 217.664062 350.734375 218.167969 350.734375 218.75 L 350.734375 261.296875 C 350.734375 262.003906 350.695312 262.527344 350.609375 262.847656 L 350.558594 263.058594 L 350.144531 263.660156 L 360.703125 263.660156 L 360.4375 262.816406 C 360.316406 262.507812 360.253906 261.996094 360.253906 261.296875 L 360.253906 242.8125 L 373.289062 261.457031 C 373.671875 262.039062 373.957031 262.566406 374.125 263.011719 L 374.304688 263.660156 L 386.625 263.660156 L 385.679688 262.976562 Z M 385.425781 262.730469 "/><path fill="currentColor" d="M 413.328125 254.902344 C 410.835938 251.507812 409.574219 246.484375 409.574219 239.957031 C 409.574219 226.890625 414.285156 220.265625 423.578125 220.265625 C 432.917969 220.265625 437.652344 226.890625 437.652344 239.957031 C 437.652344 251.296875 434.222656 257.792969 427.460938 259.269531 L 427.457031 259.269531 C 425.972656 259.609375 424.554688 259.78125 423.246094 259.78125 C 419 259.78125 415.664062 258.140625 413.328125 254.902344 M 423.578125 215.738281 C 415.925781 215.738281 409.914062 217.859375 405.714844 222.046875 C 401.519531 226.234375 399.386719 232.28125 399.386719 240.023438 C 399.386719 247.722656 401.519531 253.746094 405.714844 257.933594 C 409.914062 262.121094 415.925781 264.242188 423.578125 264.242188 C 431.28125 264.242188 437.3125 262.121094 441.511719 257.933594 C 445.710938 253.746094 447.839844 247.699219 447.839844 239.957031 C 447.839844 232.261719 445.710938 226.238281 441.511719 222.046875 C 437.3125 217.859375 431.28125 215.738281 423.578125 215.738281 "/><path fill="currentColor" d="M 502.152344 217.285156 C 502.273438 217.640625 502.335938 218.136719 502.335938 218.75 L 502.335938 247.546875 C 502.335938 254.15625 499.265625 257.96875 492.953125 259.203125 C 491.644531 259.457031 490.359375 259.585938 489.132812 259.585938 C 485.535156 259.585938 482.648438 258.523438 480.554688 256.425781 C 478.460938 254.332031 477.398438 251.542969 477.398438 248.132812 L 477.398438 218.75 C 477.398438 218.09375 477.460938 217.578125 477.582031 217.21875 L 477.980469 216.386719 L 467.335938 216.386719 L 467.644531 217.128906 L 467.695312 217.21875 C 467.738281 217.347656 467.8125 217.722656 467.8125 218.75 L 467.8125 248.585938 C 467.8125 252.664062 469.175781 256.160156 471.863281 258.964844 C 474.546875 261.769531 478.253906 263.5 482.886719 264.109375 C 484.539062 264.328125 486.144531 264.4375 487.664062 264.4375 C 493.675781 264.4375 498.480469 262.84375 501.949219 259.691406 C 505.242188 256.664062 506.914062 252.558594 506.914062 247.484375 L 506.914062 218.75 C 506.914062 218.308594 506.953125 217.8125 507.03125 217.261719 L 507.160156 217.140625 L 507.316406 216.382812 L 501.921875 216.457031 Z M 502.152344 217.285156 "/><path fill="currentColor" d="M 551.78125 230.027344 C 551.648438 236.386719 548.445312 239.476562 541.980469 239.476562 L 538.996094 239.476562 L 538.996094 220.851562 L 542.316406 220.851562 C 545.617188 220.851562 548.082031 221.65625 549.644531 223.25 C 551.125 224.761719 551.84375 227.042969 551.78125 230.027344 M 558.347656 220.984375 C 556.222656 218.765625 553.226562 217.304688 549.441406 216.652344 C 548.40625 216.476562 547.289062 216.386719 546.121094 216.386719 L 529.128906 216.453125 L 529.347656 217.246094 C 529.433594 217.664062 529.476562 218.167969 529.476562 218.75 L 529.476562 261.296875 C 529.476562 261.925781 529.433594 262.449219 529.359375 262.828125 L 528.960938 263.660156 L 539.578125 263.660156 L 539.363281 263.242188 L 539.191406 262.863281 C 539.105469 262.453125 539.0625 261.929688 539.0625 261.296875 L 539.0625 244.070312 L 543.050781 244.070312 C 547.976562 244.070312 552.046875 243.164062 555.148438 241.371094 C 558.140625 239.609375 560.074219 237.195312 560.890625 234.195312 C 561.339844 232.53125 561.566406 230.914062 561.566406 229.386719 C 561.566406 226.039062 560.484375 223.210938 558.347656 220.984375 "/><path fill="currentColor" d="M 187.796875 257.292969 L 187.796875 239.824219 C 187.796875 239.238281 187.839844 238.734375 187.914062 238.363281 L 188.3125 237.53125 L 171.019531 237.53125 L 171.019531 241.1875 L 178.542969 241.1875 L 178.542969 257.953125 C 176.578125 259.035156 174.25 259.585938 171.617188 259.585938 C 167.40625 259.585938 164 258.050781 161.484375 255.019531 C 158.78125 251.800781 157.410156 247.191406 157.410156 241.320312 C 157.410156 239.308594 157.589844 237.140625 157.941406 234.875 C 158.597656 230.464844 160.332031 226.921875 163.097656 224.339844 C 165.855469 221.765625 169.238281 220.460938 173.152344 220.460938 C 176.511719 220.460938 179.96875 221.453125 183.425781 223.40625 C 184.390625 223.960938 185.234375 224.519531 185.929688 225.070312 L 186.394531 225.433594 L 186.394531 218.359375 L 186.210938 218.289062 C 181.96875 216.640625 177.285156 215.804688 172.285156 215.804688 C 165.75 215.804688 160.300781 217.425781 156.085938 220.621094 C 151.863281 223.828125 149.128906 228.339844 147.964844 234.035156 C 147.429688 236.550781 147.15625 239.011719 147.15625 241.351562 C 147.15625 248.355469 149.390625 253.960938 153.792969 258.015625 C 158.1875 262.0625 164.164062 264.113281 171.550781 264.113281 C 175.746094 264.113281 180.242188 263.4375 184.914062 262.097656 C 186.167969 261.75 187.234375 261.398438 188.085938 261.050781 L 188.347656 260.945312 L 188.242188 260.679688 C 187.945312 259.945312 187.796875 258.804688 187.796875 257.292969 "/><path fill="currentColor" d="M 327.964844 257.292969 L 327.964844 239.824219 C 327.964844 239.238281 328.007812 238.734375 328.085938 238.363281 L 328.484375 237.53125 L 311.191406 237.53125 L 311.191406 241.1875 L 318.714844 241.1875 L 318.714844 257.953125 C 316.75 259.035156 314.417969 259.585938 311.785156 259.585938 C 307.578125 259.585938 304.167969 258.050781 301.65625 255.019531 C 298.949219 251.800781 297.582031 247.191406 297.582031 241.320312 C 297.582031 239.308594 297.757812 237.140625 298.113281 234.875 C 298.765625 230.464844 300.5 226.921875 303.265625 224.339844 C 306.027344 221.765625 309.410156 220.460938 313.324219 220.460938 C 316.683594 220.460938 320.140625 221.453125 323.597656 223.40625 C 324.558594 223.960938 325.402344 224.519531 326.101562 225.070312 L 326.5625 225.433594 L 326.5625 218.359375 L 326.382812 218.289062 C 322.140625 216.640625 317.453125 215.804688 312.453125 215.804688 C 305.921875 215.804688 300.46875 217.425781 296.253906 220.621094 C 292.03125 223.828125 289.300781 228.339844 288.136719 234.035156 C 287.597656 236.550781 287.328125 239.011719 287.328125 241.351562 C 287.328125 248.355469 289.558594 253.960938 293.964844 258.015625 C 298.359375 262.0625 304.335938 264.113281 311.71875 264.113281 C 315.914062 264.113281 320.414062 263.4375 325.085938 262.097656 C 326.339844 261.75 327.40625 261.398438 328.253906 261.050781 L 328.519531 260.945312 L 328.414062 260.679688 C 328.117188 259.941406 327.964844 258.804688 327.964844 257.292969 "/></symbol>
+</svg>
+
+<div class="app">
+  <aside class="rail">
+    <div class="brand"><svg viewBox="0 0 506 214" role="img" aria-label="Kigo Group"><use href="#logo"/></svg><small>Phân công triển khai Marketing<br>Giai đoạn 1 · 11/2026</small><a class="back" href="../">← Về trang web</a></div>
+    <ol class="toc" id="toc"></ol>
+    <div class="foot">
+      <button class="play" id="play" type="button">▶&nbsp; Trình chiếu</button>
+      <div class="updated" id="updated">Cập nhật: 09/11/2026</div>
+    </div>
+  </aside>
+
+  <div class="stagewrap" id="stagewrap">
+    <div class="stage" id="stage">
+
+      <section class="slide cover" data-t="Bìa">
+        <div class="panel">
+          <svg viewBox="0 0 506 214" role="img" aria-label="Kigo Group"><use href="#logo"/></svg>
+          <div class="meta">
+            <div><b>Đơn vị</b><span>Khối Marketing</span></div>
+            <div><b>Người lập</b><span>Hào – Leader Marketing</span></div>
+            <div><b>Thời gian</b><span>Tháng 11/2026</span></div>
+          </div>
+        </div>
+        <div class="main">
+          <div class="kicker">Kigo Group &amp; Ninemila</div>
+          <h1>Phân công triển khai Marketing</h1>
+          <span class="script">Giai đoạn 1</span>
+          <p class="sub">Thứ tự ưu tiên, người phụ trách và chỉ số đo kết quả cho từng kênh của Kigo Group và Ninemila.</p>
+        </div>
+      </section>
+
+      <section class="slide" data-t="Trọng tâm giai đoạn 1">
+        <div class="kicker">Tổng quan</div>
+        <h2>Giai đoạn 1 tập trung vào đâu</h2>
+        <div class="body">
+          <div class="pillars">
+            <div class="pillar"><span class="tag">Ưu tiên 1</span><h3>Kênh nội dung &amp; kênh bán</h3><p>Xây 3 kênh Tiktok và kênh Threads Ninemila, làm bộ SIS mới cho sàn, phủ KOC cho Ninemila.</p></div>
+            <div class="pillar"><span class="tag">Ưu tiên 2</span><h3>Facebook &amp; Instagram</h3><p>Giữ nhịp đăng đều trên 2 fanpage, 4 page ads và 2 tài khoản Instagram.</p></div>
+            <div class="pillar"><span class="tag">Ưu tiên 3</span><h3>Website &amp; đại lý</h3><p>Đề xuất phương án cho Ninemila trên kigora.vn và duy trì kênh đại lý.</p></div>
+            <div class="pillar alt"><span class="tag">Nền tảng</span><h3>Năng lực AI</h3><p>Đóng gói kỹ năng dựng video bằng AI và đào tạo toàn công ty.</p></div>
+          </div>
+          <div class="kpis figs4"><div class="kpi"><b>18</b><span>đầu việc</span></div><div class="kpi"><b>4</b><span>nhân sự triển khai</span></div><div class="kpi"><b>36–38</b><span>bài đăng mỗi tuần trên đa kênh</span></div><div class="kpi"><b>4</b><span>đề xuất cần phê duyệt</span></div></div>
+        </div>
+      </section>
+
+      <section class="slide" data-t="Ưu tiên 1a · Tiktok &amp; Threads">
+        <div class="kicker">Ưu tiên 1a · Kênh nội dung</div>
+        <h2>Tiktok &amp; Threads</h2>
+        <div class="kpis">
+          <div class="kpi"><b>≥ 500</b><span>view trung bình mỗi video</span><em>Tiktok Ninemila</em></div>
+          <div class="kpi"><b>+500</b><span>follower mỗi tháng</span><em>Threads Ninemila</em></div>
+        </div>
+        <div class="body"><table class="tbl">
+          <thead><tr><th style="width:230px">Kênh</th><th>Việc cần làm</th><th style="width:250px">Phụ trách</th><th style="width:190px">Tình trạng</th></tr></thead>
+          <tbody>
+            <tr><td class="ch">Tiktok Kigo</td><td>Nộp plan kênh văn phòng trước 14/11</td><td class="who">Phương <i>· Linh hỗ trợ</i></td><td data-s="tk-kigo"></td></tr>
+            <tr><td class="ch">Tiktok chị Loan</td><td>Xây kênh, nộp plan trước 14/11</td><td class="who">Hà Digital</td><td data-s="tk-loan"></td></tr>
+            <tr><td class="ch">Tiktok Ninemila</td><td>3–5 video mỗi tuần<small>Đăng hết video dựng sẵn, sau đó chuyển sang re-up video KOC Việt Nam</small></td><td class="who">Phương</td><td data-s="tk-nine"></td></tr>
+            <tr><td class="ch">Threads Ninemila</td><td>21 bài mỗi tuần, content bắt trend<small>Tối đa 4 bài mỗi ngày</small></td><td class="who">Linh 14 <i>·</i> Phương 7</td><td data-s="th-nine"></td></tr>
+          </tbody></table></div>
+      </section>
+
+      <section class="slide" data-t="Ưu tiên 1b · Sàn TMĐT &amp; KOL/KOC">
+        <div class="kicker">Ưu tiên 1b · Kênh bán</div>
+        <h2>Sàn TMĐT &amp; KOL/KOC</h2>
+        <div class="kpis">
+          <div class="kpi"><b>100%</b><span>listing hoàn thành</span><em>Tiktok Shop &amp; Shopee</em></div>
+          <div class="kpi"><b class="w">Theo dõi</b><span>số đơn hàng trên sàn</span><em>Báo cáo hằng tháng</em></div>
+          <div class="kpi"><b class="w">Theo dõi</b><span>số video review của KOC</span><em>Ninemila</em></div>
+        </div>
+        <div class="body">
+          <div class="split">
+            <div class="sis">
+              <h3>Bộ SIS mới cho shop</h3>
+              <div class="big"><div><b>7</b><span>sản phẩm Ninemila</span></div><div><b>≥10</b><span>combo</span></div></div>
+              <p>Đăng bổ sung đồng loạt lên các gian hàng.</p>
+            </div>
+            <div>
+              <div class="line"><b>Tiktok Shop</b><span class="who">Hà Digital</span><p>2 shop Kigo Group Vietnam và Ninemila Vietnam</p><p data-s="san-tts"></p></div>
+              <div class="line"><b>Shopee</b><span class="who">Thủy</span><p>Lưu ý xây cả shop Ninemila mới</p><p data-s="san-shopee"></p></div>
+              <div class="line"><b>Booking KOL/KOC</b><span class="who">Hà Digital</span><p>Phủ thương hiệu Ninemila</p><p data-s="kol"></p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-t="Ưu tiên 2 · Facebook &amp; Instagram">
+        <div class="kicker">Ưu tiên 2</div>
+        <h2>Facebook &amp; Instagram</h2>
+        <div class="body"><table class="tbl">
+          <thead><tr><th style="width:310px">Kênh</th><th>Nội dung</th><th style="width:170px">Tần suất</th><th style="width:140px">Phụ trách</th><th style="width:170px">Tình trạng</th></tr></thead>
+          <tbody>
+            <tr><td class="ch">Fanpage Kigo Group</td><td>Bài gốc</td><td class="fig">3 bài/tuần</td><td>Linh</td><td data-s="fb-kigo"></td></tr>
+            <tr><td class="ch">Fanpage Ninemila</td><td>Bài gốc</td><td class="fig">5 bài/tuần</td><td>Linh</td><td data-s="fb-nine"></td></tr>
+            <tr><td class="ch">4 page ads</td><td>Re-up từ nguồn content Nhi outsource, team Trinh thuê ngoài<small>2 page Kigo ads, 2 page Ninemila lẻ ads</small></td><td class="fig">Theo nguồn</td><td>Phương</td><td data-s="ads"></td></tr>
+            <tr><td class="ch">IG Kigo Global</td><td>Dịch ảnh và content từ bài Việt Nam</td><td class="fig">2 bài/tuần</td><td>Phương</td><td data-s="ig-global"></td></tr>
+            <tr><td class="ch">IG Ninemila</td><td>Re-up từ fanpage Ninemila</td><td class="fig">Theo fanpage</td><td>Linh</td><td data-s="ig-nine"></td></tr>
+          </tbody></table></div>
+      </section>
+
+      <section class="slide" data-t="Ưu tiên 3 · Website &amp; đại lý">
+        <div class="kicker">Ưu tiên 3</div>
+        <h2>Website &amp; kênh đại lý</h2>
+        <div class="body"><div class="trio">
+          <div class="card3"><div class="tag"><span class="kicker" style="font-size:13px">Web Việt</span><span data-s="web-vn"></span></div><h3>kigora.vn</h3><p>Đề xuất phương án chạy lẻ Ninemila, có pop-up thông tin ấn tượng để thu hút khách.</p><div class="who">Phụ trách: <b>Hào</b></div><div class="meas"><b>Chỉ số</b>Chốt phương án · SL khách web để lại thông tin</div></div>
+          <div class="card3"><div class="tag"><span class="kicker" style="font-size:13px">Đại lý</span><span data-s="daily"></span></div><h3>Kênh đại lý</h3><p>Duy trì đăng bài đều đặn cho hệ thống đại lý.</p><div class="who">Phụ trách: <b>Linh 1 bài · Phương 1 bài</b></div><div class="meas"><b>Chỉ số</b>2 bài mỗi tuần</div></div>
+          <div class="card3 off"><div class="tag"><span class="kicker" style="font-size:13px;color:var(--muted)">Web Global</span><span data-s="web-global"></span></div><h3>kigora.com</h3><p>Tạm dừng, chờ giấy phép. Cần đăng ký Google Translate API trước khi triển khai.</p><div class="who">Xem đề xuất ở slide cuối</div></div>
+        </div></div>
+      </section>
+
+      <section class="slide" data-t="Nền tảng AI">
+        <div class="kicker">Nền tảng · Hào phụ trách</div>
+        <h2>Năng lực AI cho toàn công ty</h2>
+        <div class="kpis">
+          <div class="kpi"><b>100%</b><span>nhân viên tham gia training</span><em>Toàn công ty</em></div>
+          <div class="kpi"><b>4</b><span>bộ skill đóng gói, đồng bộ plugin</span><em>Dùng chung trên mọi thiết bị</em></div>
+        </div>
+        <div class="body"><div class="ai">
+          <div>
+            <div class="skill"><span class="k">01</span><div><b>Video talk trực tiếp</b><small>Dựng video người nói trực tiếp</small></div><span data-s="ai-video"></span></div>
+            <div class="skill"><span class="k">02</span><div><b>Video voice lồng tiếng &amp; trám hình</b><small>Dựng video lồng tiếng, chèn hình minh họa</small></div><span data-s="ai-video"></span></div>
+            <div class="skill"><span class="k">03</span><div><b>Video tổng hợp KOC review</b><small>Ghép các video KOC đã review sản phẩm</small></div><span data-s="ai-video"></span></div>
+            <div class="skill"><span class="k">04</span><div><b>Video đơn giản cho team Sale</b><small>Để team Sale tự xây kênh Tiktok</small></div><span data-s="ai-sale"></span></div>
+          </div>
+          <div class="event"><span class="tag">Training toàn công ty</span><div class="d">18/11<small>THỨ TƯ</small></div><p>Đào tạo toàn bộ nhân viên sử dụng các bộ skill AI.</p><span data-s="ai-train"></span></div>
+        </div></div>
+      </section>
+
+      <section class="slide" data-t="Đội hình &amp; tiến độ nội dung">
+        <div class="kicker">Nhân sự</div>
+        <h2>Đội hình &amp; tiến độ nội dung</h2>
+        <div class="body"><div class="teamgrid"><div>
+          <div class="mxwrap"><table class="mx">
+          <thead><tr><th style="width:200px">Người</th><th>Tiktok</th><th>Threads</th><th>Sàn &amp; KOL</th><th>Facebook &amp; IG</th><th>Đại lý</th><th class="num" style="width:110px">Bài/tuần</th></tr></thead>
+          <tbody>
+            <tr><td class="p"><b>Phương</b><small>Content &amp; video</small></td><td><span class="mk">Kigo, Ninemila</span></td><td><span class="mk">7 bài</span></td><td></td><td><span class="mk">4 page ads, IG Global</span></td><td><span class="mk">1 bài</span></td><td class="num">13–15</td></tr>
+            <tr><td class="p"><b>Linh</b><small>Fanpage &amp; Threads</small></td><td><span class="mk sup">Hỗ trợ Kigo</span></td><td><span class="mk">14 bài</span></td><td></td><td><span class="mk">2 fanpage, IG Ninemila</span></td><td><span class="mk">1 bài</span></td><td class="num">23</td></tr>
+            <tr><td class="p"><b>Hà Digital</b><small>Tiktok, sàn, KOL</small></td><td><span class="mk">Kênh chị Loan</span></td><td></td><td><span class="mk">Tiktok Shop, KOL/KOC</span></td><td></td><td></td><td class="num na">Theo việc</td></tr>
+            <tr><td class="p"><b>Thủy</b><small>Sàn Shopee</small></td><td></td><td></td><td><span class="mk">Shopee</span></td><td></td><td></td><td class="num na">Theo việc</td></tr>
+          </tbody></table></div>
+          <div class="legend"><span class="mk">Phụ trách chính</span><span class="mk sup">Hỗ trợ</span></div>
+        </div>
+        <div class="sumbox"><b id="sumNum">36–38</b><span>bài mỗi tuần trên đa kênh</span><ul id="bars"></ul></div>
+        </div></div>
+      </section>
+
+      <section class="slide" data-t="Đề xuất cần phê duyệt">
+        <div class="kicker">Đề xuất</div>
+        <h2>Đề xuất cần sếp phê duyệt</h2>
+        <div class="body"><div class="asks">
+          <div>
+            <div class="ask"><span class="k">1</span><div><b>Đăng ký Google Translate API</b><p>Sếp nhập thông tin thanh toán để mở tài khoản, phục vụ web Global kigora.com.</p></div></div>
+            <div class="ask"><span class="k">2</span><div><b>Bổ sung nhân sự</b><p>Tuyển thêm sale tư vấn lẻ và nhân sự digital.</p></div></div>
+            <div class="ask"><span class="k">3</span><div><b>Ngân sách KOL/KOC</b><p>Cho hoạt động booking phủ thương hiệu Ninemila.</p></div></div>
+            <div class="ask"><span class="k">4</span><div><b>Ngân sách chạy ads</b><p>Cho các page ads của Kigo Group và Ninemila.</p></div></div>
+          </div>
+          <div class="next">
+            <span class="tag">Định hướng tiếp theo</span>
+            <div><b>Giai đoạn 2</b><p>Chốt sau khi duyệt plan Tiktok (14/11) và có kết quả training AI (18/11).</p></div>
+            <div><b>Giai đoạn 3</b><p>Triển khai web Global kigora.com khi có giấy phép.</p></div>
+          </div>
+        </div></div>
+      </section>
+
+    </div>
+    <div class="nav"><button type="button" id="prev" aria-label="Slide trước">←</button><span id="pos">1 / 9</span><button type="button" id="next" aria-label="Slide sau">→</button></div>
+  </div>
+</div>
+
+<script>
+/* Google Sheets: dán link CSV đã "Xuất bản lên web" vào đây. Cột: Mã | Việc | Tình trạng | Tiến độ | Ngày cập nhật */
+const SHEET_CSV = "";
+const STATUS = {
+  "tk-kigo":{s:"due",l:"Hạn 14/11"}, "tk-loan":{s:"due",l:"Hạn 14/11"}, "tk-nine":{s:"run",p:"7/25"}, "th-nine":{s:"run"},
+  "san-tts":{s:"run"}, "san-shopee":{s:"run"}, "kol":{s:"run"},
+  "fb-kigo":{s:"run"}, "fb-nine":{s:"run"}, "ads":{s:"run"}, "ig-global":{s:"run"}, "ig-nine":{s:"run"},
+  "web-vn":{s:"run"}, "daily":{s:"run"}, "web-global":{s:"hold"},
+  "ai-video":{s:"run"}, "ai-sale":{s:"run"}, "ai-train":{s:"due",l:"Hạn 18/11"}
+};
+const LABEL = {due:"Có hạn",run:"Đang chạy",hold:"Tạm hoãn",done:"Hoàn thành"};
+const FROM_TEXT = {"có hạn":"due","đang chạy":"run","tạm hoãn":"hold","hoàn thành":"done"};
+const OUTPUT = [["Threads Ninemila","Linh 14 · Phương 7",21,21],["Fanpage Ninemila","Linh",5,5],["Tiktok Ninemila","Phương",3,5],["Fanpage Kigo Group","Linh",3,3],["IG Kigo Global","Phương",2,2],["Kênh đại lý","Linh 1 · Phương 1",2,2]];
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function paintStatus(){
+  document.querySelectorAll("[data-s]").forEach(el=>{
+    const v=STATUS[el.dataset.s]; if(!v){el.innerHTML="";return}
+    const lbl=v.s==="due"&&v.l?v.l:LABEL[v.s];
+    el.innerHTML=`<span class="st ${v.s}">${esc(lbl)}${v.p?`<span class="prog">${esc(v.p)}</span>`:""}</span>`;
+  });
+}
+(function bars(){
+  const max=Math.max(...OUTPUT.map(o=>o[3]));
+  $("#bars").innerHTML=OUTPUT.map(([n,s,a,b])=>`<li><span>${esc(n)}</span><span style="background:rgba(255,255,255,.6)"><i style="width:${b/max*100}%"></i></span><em>${a===b?a:a+"–"+b}</em></li>`).join("");
+  const lo=OUTPUT.reduce((x,o)=>x+o[2],0), hi=OUTPUT.reduce((x,o)=>x+o[3],0); $("#sumNum").textContent=lo+"–"+hi;
+})();
+
+const slides=[...document.querySelectorAll(".slide")];
+const N=slides.length;
+slides.forEach((s,i)=>{
+  if(s.classList.contains("cover"))return;
+  const f=document.createElement("div");f.className="sfoot";
+  f.innerHTML=`<svg viewBox="0 0 506 214" aria-hidden="true"><use href="#logo"/></svg><span>Phân công triển khai Marketing · Giai đoạn 1</span><span class="pg">${String(i+1).padStart(2,"0")} / ${String(N).padStart(2,"0")}</span>`;
+  s.appendChild(f);
+});
+$("#toc").innerHTML=slides.map((s,i)=>`<li><button type="button" data-i="${i}"><span class="n">${String(i+1).padStart(2,"0")}</span><span>${s.dataset.t}</span></button></li>`).join("");
+let cur=0;
+function go(i,push=true){
+  cur=Math.max(0,Math.min(N-1,i));
+  slides.forEach((s,j)=>s.classList.toggle("on",j===cur));
+  document.querySelectorAll(".toc button").forEach((b,j)=>b.setAttribute("aria-current",String(j===cur)));
+  $("#pos").textContent=`${cur+1} / ${N}`;
+  if(push){try{history.replaceState(null,"","#slide-"+(cur+1))}catch(e){}}
+}
+const fromHash=()=>{const m=/^#slide-(\d+)$/.exec(location.hash);return m?parseInt(m[1],10)-1:0};
+const phone=()=>matchMedia("(max-width:900px)").matches;
+function fit(){
+  const w=$("#stagewrap"), st=$("#stage");
+  if(phone()){st.style.transform="";return}
+  const show=document.body.classList.contains("show"), pad=show?0:56, bottom=show?0:44;
+  const k=Math.min((w.clientWidth-pad)/1600,(w.clientHeight-pad-bottom)/900);
+  st.style.transform=`translate(-50%,-50%) scale(${Math.max(.2,k)})`;
+}
+addEventListener("resize",fit);
+$("#toc").addEventListener("click",e=>{const b=e.target.closest("[data-i]");if(b)go(+b.dataset.i)});
+$("#prev").addEventListener("click",()=>go(cur-1));
+$("#next").addEventListener("click",()=>go(cur+1));
+document.addEventListener("keydown",e=>{
+  if(phone())return;
+  if(["ArrowRight","PageDown"," "].includes(e.key)){e.preventDefault();go(cur+1)}
+  else if(["ArrowLeft","PageUp"].includes(e.key)){e.preventDefault();go(cur-1)}
+  else if(e.key==="Home")go(0); else if(e.key==="End")go(N-1);
+  else if(e.key==="Escape"&&document.body.classList.contains("show"))exitShow();
+});
+let tx=null;
+$("#stagewrap").addEventListener("touchstart",e=>{tx=e.touches[0].clientX},{passive:true});
+$("#stagewrap").addEventListener("touchend",e=>{if(tx==null||phone())return;const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>50)go(cur+(d<0?1:-1));tx=null});
+$("#stage").addEventListener("click",e=>{if(document.body.classList.contains("show")&&!e.target.closest("a,button"))go(cur+1)});
+function exitShow(){document.body.classList.remove("show");try{if(document.fullscreenElement)document.exitFullscreen().catch(()=>{})}catch(e){}requestAnimationFrame(fit)}
+$("#play").addEventListener("click",()=>{
+  document.body.classList.add("show");
+  try{const r=document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();r&&r.catch(()=>{})}catch(e){}
+  requestAnimationFrame(fit);
+});
+document.addEventListener("fullscreenchange",()=>{if(!document.fullscreenElement&&document.body.classList.contains("show"))exitShow();else requestAnimationFrame(fit)});
+addEventListener("hashchange",()=>go(fromHash(),false));
+
+function parseCSV(t){const rows=[];let r=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];
+  if(q){if(c==='"'){if(t[i+1]==='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c==='"')q=true;else if(c===","){r.push(f);f=""}else if(c==="\n"){r.push(f);rows.push(r);r=[];f=""}else if(c!=="\r")f+=c}
+  if(f||r.length){r.push(f);rows.push(r)}return rows}
+async function loadSheet(){
+  if(!SHEET_CSV)return;
+  try{
+    const res=await fetch(SHEET_CSV,{cache:"no-store"}); if(!res.ok)return;
+    const rows=parseCSV(await res.text()).slice(1); let latest="";
+    rows.forEach(([id,,st,prog,date])=>{
+      id=(id||"").trim(); if(!STATUS[id])return;
+      const s=FROM_TEXT[(st||"").trim().toLowerCase()]; if(s){STATUS[id].s=s; if(s!=="due")delete STATUS[id].l}
+      if(prog&&prog.trim())STATUS[id].p=prog.trim();
+      if(date&&date.trim())latest=date.trim();
+    });
+    paintStatus(); if(latest)$("#updated").textContent="Cập nhật: "+latest;
+  }catch(e){}
+}
+paintStatus(); go(fromHash(),false); fit(); loadSheet();
+</script>
+
+</body>
+</html>
