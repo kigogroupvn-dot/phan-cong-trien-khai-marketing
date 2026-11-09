@@ -59,7 +59,7 @@ a{color:inherit}
 .tab{flex:none;display:grid;gap:2px;text-align:left;padding:18px 22px 15px;border:none;background:none;border-bottom:3px solid transparent;cursor:pointer;font:inherit;color:var(--muted)}
 .tab:hover{color:var(--text)}
 .tab small{font-family:var(--f-head);font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase}
-.tab span{font-family:var(--f-title);font-weight:700;font-size:19px;white-space:nowrap}
+.tab>span{font-family:var(--f-title);font-weight:700;font-size:19px;white-space:nowrap}
 .tab[aria-selected="true"]{color:var(--velvet);border-bottom-color:var(--crimson)}
 .tab[aria-selected="true"] small{color:var(--crimson)}
 
@@ -73,7 +73,7 @@ a{color:inherit}
 .goal{padding:18px 0;border-bottom:1px solid var(--rule)}
 .goal b{display:block;font-family:var(--f-head);font-weight:900;font-size:42px;line-height:1;color:var(--crimson);letter-spacing:-.01em;font-variant-numeric:tabular-nums}
 .goal b.w{font-size:26px;padding-block:4px}
-.goal span{display:block;margin-top:6px;font-size:15px}
+.goal>span{display:block;margin-top:6px;font-size:15px}
 .goal em{font-style:normal;font-size:13px;color:var(--muted)}
 .rows{min-width:0}
 .row{display:grid;grid-template-columns:1fr auto;gap:8px 28px;padding:28px 0;border-bottom:1px solid var(--rule)}
@@ -112,6 +112,11 @@ a{color:inherit}
 .mk{display:flex;gap:9px;align-items:flex-start;line-height:1.4}
 .mk::before{content:"";flex:none;width:11px;height:14px;border-radius:50%;margin-top:3px;background:var(--crimson);box-sizing:border-box}
 .mk.sup::before{background:none;border:2px solid var(--crimson)}
+.mk.ok::before{border-radius:3px;width:11px;height:11px;margin-top:4px;background:var(--velvet);transform:rotate(45deg)}
+.mx td .mk+.mk{margin-top:6px}
+.mx tr.lead td{background:var(--paper)}
+.lead-by{display:flex;align-items:center;gap:10px;margin-top:22px;font-size:14.5px;color:var(--muted)}
+.lead-by b{color:var(--text);font-weight:600}
 .mx td.num{text-align:right;font-family:var(--f-head);font-weight:900;font-size:30px;color:var(--crimson);font-variant-numeric:tabular-nums;white-space:nowrap}
 .mx td.num.na{font-size:14px;font-weight:700;color:var(--muted)}
 .legend{display:flex;gap:28px;margin-top:18px;font-size:14px;color:var(--muted)}
@@ -156,7 +161,7 @@ footer .logo{width:88px;color:var(--crimson)}
   .hero .wrap{grid-template-columns:1fr;gap:36px;padding-block:44px 52px}
   .hero p{font-size:16.5px}
   .figs{min-height:0;border-radius:90px 16px 16px 16px;padding:84px 28px 28px}.figs .tag{left:28px;top:34px}
-  .tab{padding:14px 16px 11px}.tab span{font-size:16px}
+  .tab{padding:14px 16px 11px}.tab>span{font-size:16px}
   .panel .wrap{grid-template-columns:1fr;gap:32px;padding-block:44px 8px}
   .intro h2{font-size:34px}.goal b{font-size:34px}
   .row{grid-template-columns:1fr}.row .side{grid-row:auto;grid-column:1;justify-items:start;text-align:left}.ppl{justify-content:flex-start}
@@ -170,6 +175,20 @@ footer .logo{width:88px;color:var(--crimson)}
   .next{border-left:none;padding-left:0;border-top:1px solid rgba(255,255,255,.3);padding-top:28px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* edit mode */
+.ed{outline:1.5px dashed var(--flamingo);outline-offset:3px;border-radius:2px;cursor:text}
+.ed:hover{outline-color:var(--crimson)}.ed:focus{outline:2px solid var(--crimson);background:rgba(253,227,221,.5)}
+.props .ed{outline-color:rgba(255,255,255,.5)}
+.edbar{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:grid;gap:10px;justify-items:end;max-width:min(380px,calc(100vw - 32px))}
+.edpanel{background:var(--white);border:1px solid var(--rule);border-radius:12px;box-shadow:0 12px 40px rgba(80,20,20,.18);padding:16px;display:grid;gap:10px;width:100%}
+.edpanel b{font-family:var(--f-head);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson)}
+.edpanel p{margin:0;font-size:13px;color:var(--muted);line-height:1.5}
+.edpanel textarea{font:inherit;font-size:14px;min-height:88px;resize:vertical;border:1px solid var(--rule);border-radius:8px;padding:8px 10px;color:var(--text)}
+.edrow{display:flex;gap:10px;align-items:center;justify-content:space-between}
+.edrow span{font-size:12.5px;color:var(--muted)}
+.edbtn{font-family:var(--f-head);font-weight:700;font-size:13px;letter-spacing:.04em;border:none;border-radius:8px;padding:11px 18px;cursor:pointer;background:var(--crimson);color:var(--white);box-shadow:0 6px 20px rgba(172,36,54,.3)}
+.edbtn:disabled{background:var(--grey);box-shadow:none;cursor:default}
+.edbtn.alt{background:var(--velvet)}
 </style>
 
 </head>
@@ -178,13 +197,13 @@ footer .logo{width:88px;color:var(--crimson)}
 
 <header class="top"><div class="wrap">
   <svg class="logo" viewBox="0 0 506 214" role="img" aria-label="Kigo Group"><use href="#logo"/></svg>
-  <nav aria-label="Các phần"><a href="#phan-cong">Phân công</a><a href="#doi-hinh">Đội hình</a><a href="#nhip-noi-dung">Nhịp nội dung</a><a href="#de-xuat">Đề xuất</a></nav>
+  <nav aria-label="Các phần"><a href="#phan-cong">Phân công</a><a href="#doi-hinh">Đội hình</a><a href="#nhip-noi-dung">Tiến độ nội dung</a><a href="#de-xuat">Đề xuất</a></nav>
   <a class="btn" id="slideBtn" href="slide/">Xem slide →</a>
 </div></header>
 
 <section class="hero"><div class="wrap">
   <div>
-    <div class="kicker">Kigo Group &amp; Ninemila · Phòng Marketing</div>
+    <div class="kicker">Kigo Group &amp; Ninemila · Khối Marketing</div>
     <h1>Phân công triển khai Marketing</h1>
     <span class="script">Giai đoạn 1</span>
     <p>Thứ tự ưu tiên, người phụ trách và chỉ số đo kết quả cho từng kênh của Kigo Group và Ninemila.</p>
@@ -209,13 +228,13 @@ footer .logo{width:88px;color:var(--crimson)}
       <tr><td class="p"><i>L</i><div><b>Linh</b><small>Fanpage &amp; Threads</small></div></td><td><span class="mk sup">Hỗ trợ Kigo</span></td><td><span class="mk">14 bài</span></td><td></td><td><span class="mk">2 fanpage, IG Ninemila</span></td><td><span class="mk">Đại lý 1 bài</span></td><td></td><td class="num">23</td></tr>
       <tr><td class="p"><i>HD</i><div><b>Hà Digital</b><small>Tiktok, sàn, KOL</small></div></td><td><span class="mk">Kênh chị Loan</span></td><td></td><td><span class="mk">Tiktok Shop, KOL/KOC</span></td><td></td><td></td><td></td><td class="num na">Theo việc</td></tr>
       <tr><td class="p"><i>T</i><div><b>Thủy</b><small>Sàn Shopee</small></div></td><td></td><td></td><td><span class="mk">Shopee</span></td><td></td><td></td><td></td><td class="num na">Theo việc</td></tr>
-      <tr><td class="p"><i>H</i><div><b>Hào</b><small>Leader Marketing</small></div></td><td></td><td></td><td></td><td></td><td><span class="mk">kigora.vn</span></td><td><span class="mk">4 skill, training</span></td><td class="num na">Theo việc</td></tr>
+      <tr class="lead"><td class="p"><i>H</i><div><b>Hào</b><small>Leader Marketing · lên plan &amp; duyệt</small></div></td><td><span class="mk ok">Lên plan, duyệt 3 kênh</span></td><td><span class="mk ok">Duyệt content</span></td><td><span class="mk ok">Duyệt SIS, KOL/KOC</span></td><td><span class="mk ok">Duyệt bài &amp; ads</span></td><td><span class="mk">kigora.vn</span><span class="mk ok">Duyệt bài đại lý</span></td><td><span class="mk">4 skill, training</span></td><td class="num na">Toàn bộ kênh</td></tr>
     </tbody></table></div>
-  <div class="legend"><span class="mk">Phụ trách chính</span><span class="mk sup">Hỗ trợ</span></div>
+  <div class="legend"><span class="mk">Phụ trách chính</span><span class="mk sup">Hỗ trợ</span><span class="mk ok">Lên plan &amp; duyệt</span></div>
 </section>
 
 <section class="sec wrap" id="nhip-noi-dung" aria-labelledby="h-rhythm">
-  <div class="sec-head"><span class="kicker">Sản lượng</span><h2 id="h-rhythm">Nhịp nội dung mỗi tuần</h2><p>Các kênh có chỉ tiêu số bài cụ thể. Kênh re-up và page ads không tính.</p></div>
+  <div class="sec-head"><span class="kicker">Sản lượng</span><h2 id="h-rhythm">Tiến độ nội dung mỗi tuần</h2><p>Các kênh có chỉ tiêu số bài cụ thể. Kênh re-up và page ads không tính.</p></div>
   <div class="rhythm"><div class="bars" id="bars"></div><div class="sum"><b id="sumNum"></b><span>bài mỗi tuần</span><p>Tổng trên 6 kênh</p></div></div>
 </section>
 
@@ -253,33 +272,33 @@ const LABEL = {due:"Có hạn",run:"Đang chạy",hold:"Tạm hoãn",done:"Hoàn
 const FROM_TEXT = {"có hạn":"due","đang chạy":"run","tạm hoãn":"hold","hoàn thành":"done"};
 const TABS = [
  {id:"ut1a",small:"Ưu tiên 1a",name:"Tiktok & Threads",kicker:"Ưu tiên 1a · Kênh nội dung",title:"Tiktok & Threads",
-  desc:"Xây 3 kênh Tiktok cho văn phòng, đối tác và Ninemila, cùng kênh Threads đăng liên tục để kéo tương tác cho Ninemila.",
-  goals:[["≥ 1.000","view trung bình mỗi video","Tiktok Ninemila · theo tháng"],["+500","follower mỗi tháng","Threads Ninemila"]],
+  desc:"Xây 3 kênh Tiktok cho văn phòng, chị Loan và Ninemila, cùng kênh Threads đăng liên tục để kéo tương tác cho Ninemila.",
+  goals:[["≥ 500","view trung bình mỗi video","Tiktok Ninemila · theo tháng"],["+500","follower mỗi tháng","Threads Ninemila"]],
   rows:[
    {id:"tk-kigo",h:"Tiktok Kigo",w:"Lên plan kênh Tiktok văn phòng",who:[["phuong"],["linh","hỗ trợ"]],st:"due",due:"Hạn 14/11"},
    {id:"tk-loan",h:"Tiktok chị Loan",w:"Xây kênh Tiktok chị Loan và lên plan",who:[["ha"]],st:"due",due:"Hạn 14/11"},
    {id:"tk-nine",h:"Tiktok Ninemila",f:"3–5 video mỗi tuần",w:"Đăng video đã dựng",s:"Đăng hết video dựng sẵn, sau đó chuyển sang re-up video KOC Việt Nam",who:[["phuong"]],st:"run",prog:[7,25,"video dựng sẵn đã đăng"]},
    {id:"th-nine",h:"Threads Ninemila",f:"21 bài mỗi tuần",w:"Đăng liên tục content bắt trend",s:"Tối đa 4 bài mỗi ngày",who:[["linh","14 bài"],["phuong","7 bài"]],st:"run"}]},
  {id:"ut1b",small:"Ưu tiên 1b",name:"Sàn TMĐT & KOL",kicker:"Ưu tiên 1b · Kênh bán",title:"Sàn TMĐT & KOL/KOC",
-  desc:"Làm bộ SIS mới cho Ninemila gồm 7 sản phẩm và 17 combo, đăng đồng loạt lên các gian hàng, đồng thời phủ KOC cho thương hiệu.",
+  desc:"Làm bộ SIS mới cho shop, đăng bổ sung các sản phẩm Ninemila gồm 7 sản phẩm và ≥10 combo, đăng đồng loạt lên các gian hàng, đồng thời phủ KOC cho thương hiệu.",
   goals:[["100%","listing hoàn thành","Tiktok Shop & Shopee"],["Theo dõi","số đơn hàng trên sàn","Báo cáo hằng tháng",1],["Theo dõi","số video review của KOC","Ninemila",1]],
   rows:[
-   {id:"san-tts",h:"Tiktok Shop",f:"7 sản phẩm + 17 combo",w:"Bộ SIS mới, đăng bổ sung lên 2 shop",s:"Kigo Group Vietnam và Ninemila Vietnam",who:[["ha"]],st:"run"},
-   {id:"san-shopee",h:"Shopee",f:"7 sản phẩm + 17 combo",w:"Bộ SIS mới, đăng bổ sung lên gian hàng",who:[["thuy"]],st:"run"},
+   {id:"san-tts",h:"Tiktok Shop",f:"7 sản phẩm & ≥10 combo",w:"Bộ SIS mới, đăng bổ sung lên 2 shop",s:"Kigo Group Vietnam và Ninemila Vietnam",who:[["ha"]],st:"run"},
+   {id:"san-shopee",h:"Shopee",f:"7 sản phẩm & ≥10 combo",w:"Bộ SIS mới, đăng bổ sung lên gian hàng",s:"Lưu ý xây cả shop Ninemila mới",who:[["thuy"]],st:"run"},
    {id:"kol",h:"Booking KOL/KOC",w:"Book KOL/KOC phủ thương hiệu Ninemila",who:[["ha"]],st:"run"}]},
  {id:"ut2",small:"Ưu tiên 2",name:"Facebook & Instagram",kicker:"Ưu tiên 2",title:"Facebook & Instagram",
   desc:"Giữ nhịp đăng đều trên 2 fanpage, 4 page ads và 2 tài khoản Instagram.",goals:[],
   rows:[
    {id:"fb-kigo",h:"Fanpage Kigo Group",f:"3 bài mỗi tuần",w:"Bài gốc",who:[["linh"]],st:"run"},
    {id:"fb-nine",h:"Fanpage Ninemila",f:"5 bài mỗi tuần",w:"Bài gốc",who:[["linh"]],st:"run"},
-   {id:"ads",h:"4 page ads",f:"Theo nguồn",w:"Re-up song song từ nguồn outsource",s:"2 page Kigo ads và 2 page Ninemila lẻ ads",who:[["phuong"]],st:"run"},
+   {id:"ads",h:"4 page ads",f:"Theo nguồn",w:"Re-up song song từ nguồn content Nhi outsource team Trinh thuê ngoài",s:"2 page Kigo ads và 2 page Ninemila lẻ ads",who:[["phuong"]],st:"run"},
    {id:"ig-global",h:"IG Kigo Global",f:"2 bài mỗi tuần",w:"Dịch ảnh và content từ bài Việt Nam",who:[["phuong"]],st:"run"},
    {id:"ig-nine",h:"IG Ninemila",f:"Theo fanpage",w:"Re-up từ fanpage Ninemila",who:[["linh"]],st:"run"}]},
  {id:"ut3",small:"Ưu tiên 3",name:"Website & đại lý",kicker:"Ưu tiên 3",title:"Website & kênh đại lý",
   desc:"Chuẩn bị phương án website cho Ninemila và giữ liên lạc đều đặn với hệ thống đại lý.",
-  goals:[["Chốt","phương án pop-up Ninemila","kigora.vn",1],["Đếm","số khách để lại thông tin","Qua pop-up trên kigora.vn",1],["2 bài","mỗi tuần","Kênh đại lý"]],
+  goals:[["Chốt","phương án pop-up Ninemila","kigora.vn",1],["SL khách web","số khách để lại thông tin","Qua pop-up trên kigora.vn",1],["2 bài","mỗi tuần","Kênh đại lý"]],
   rows:[
-   {id:"web-vn",h:"kigora.vn",w:"Đề xuất phương án chạy lẻ Ninemila",s:"Có pop-up thông tin ấn tượng để thu thông tin khách",who:[["hao"]],st:"run"},
+   {id:"web-vn",h:"kigora.vn",w:"Đề xuất phương án chạy lẻ Ninemila",s:"Có pop-up thông tin ấn tượng để thu hút khách",who:[["hao"]],st:"run"},
    {id:"daily",h:"Kênh đại lý",f:"2 bài mỗi tuần",w:"Duy trì đăng bài cho hệ thống đại lý",who:[["linh","1 bài"],["phuong","1 bài"]],st:"run"},
    {id:"web-global",h:"kigora.com",w:"Web Global, tạm dừng chờ giấy phép",s:"Cần đăng ký Google Translate API trước khi triển khai",who:[],st:"hold",off:1}]},
  {id:"ai",small:"Nền tảng",name:"Năng lực AI",kicker:"Nền tảng · Hào phụ trách",title:"Năng lực AI cho toàn công ty",
@@ -294,39 +313,46 @@ const OUTPUT=[["Threads Ninemila","Linh 14 · Phương 7",21,21],["Fanpage Ninem
 
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+/* EDITS: text overrides keyed by data-k (filled from the edit store when available) */
+const EDITS={};
+let editing=false;
+const T=(k,d)=>`<span data-k="${k}">${esc(k in EDITS?EDITS[k]:d)}</span>`;
 const ROWS=Object.fromEntries(TABS.flatMap(t=>t.rows).map(r=>[r.id,r]));
 const lo=OUTPUT.reduce((x,o)=>x+o[2],0), hi=OUTPUT.reduce((x,o)=>x+o[3],0);
 
-$("#figs").innerHTML=[[Object.keys(ROWS).length,"đầu việc"],[Object.keys(P).length,"nhân sự phụ trách"],[lo+"–"+hi,"bài đăng mỗi tuần"],["4","đề xuất cần phê duyệt"]].map(([a,b])=>`<div><dt>${a}</dt><dd>${b}</dd></div>`).join("");
+function renderFigs(){$("#figs").innerHTML=[[Object.keys(ROWS).length,"đầu việc"],[Object.keys(P).length,"nhân sự phụ trách"],[lo+"–"+hi,"bài đăng mỗi tuần trên đa kênh"],["4","đề xuất cần phê duyệt"]].map(([a,b],i)=>`<div><dt>${T("fig"+i+".n",a)}</dt><dd>${T("fig"+i+".l",b)}</dd></div>`).join("")}
 const max=Math.max(...OUTPUT.map(o=>o[3]));
-$("#bars").innerHTML=OUTPUT.map(([n,s,a,b])=>`<div class="brow"><div class="n"><b>${esc(n)}</b><small>${esc(s)}</small></div><div class="track" role="img" aria-label="${a===b?a:a+" đến "+b} bài mỗi tuần">${b>a?`<i class="r" style="width:${b/max*100}%"></i>`:""}<i style="width:${a/max*100}%"></i></div><div class="v">${a===b?a:a+"–"+b}</div></div>`).join("");
+function renderBars(){$("#bars").innerHTML=OUTPUT.map(([n,s,a,b],i)=>`<div class="brow"><div class="n"><b>${T("bar"+i+".n",n)}</b><small>${T("bar"+i+".s",s)}</small></div><div class="track" role="img" aria-label="${a===b?a:a+" đến "+b} bài mỗi tuần">${b>a?`<i class="r" style="width:${b/max*100}%"></i>`:""}<i style="width:${a/max*100}%"></i></div><div class="v">${a===b?a:a+"–"+b}</div></div>`).join("")}
+renderFigs();renderBars();
 $("#sumNum").textContent=lo+"–"+hi;
 
 let cur=0;
-function status(r){const lbl=r.st==="due"&&r.due?r.due:LABEL[r.st];return `<span class="st ${r.st}">${esc(lbl)}</span>`}
-function person([k,note]){return `<span class="pp"><i>${P[k][0]}</i>${esc(P[k][1])}${note?` <em>${esc(note)}</em>`:""}</span>`}
+function status(r){const lbl=r.st==="due"&&r.due?r.due:LABEL[r.st];return `<span class="st ${r.st}">${T("row."+r.id+".st",lbl)}</span>`}
+function person([k,note],r,i){return `<span class="pp"><i>${P[k][0]}</i>${esc(P[k][1])}${note?` <em>${T("row."+r.id+".who"+i,note)}</em>`:""}</span>`}
 function renderTabs(){
-  $("#tablist").innerHTML=TABS.map((t,i)=>`<button class="tab" role="tab" type="button" id="tab-${t.id}" aria-controls="panel" aria-selected="${i===cur}" tabindex="${i===cur?0:-1}" data-i="${i}"><small>${esc(t.small)}</small><span>${esc(t.name)}</span></button>`).join("");
+  $("#tablist").innerHTML=TABS.map((t,i)=>`<button class="tab" role="tab" type="button" id="tab-${t.id}" aria-controls="panel" aria-selected="${i===cur}" tabindex="${i===cur?0:-1}" data-i="${i}"><small>${T("tab."+t.id+".small",t.small)}</small><span>${T("tab."+t.id+".name",t.name)}</span></button>`).join("");
 }
 function renderPanel(){
-  const t=TABS[cur];
-  const goals=t.goals.length?`<div class="goals"><span class="lbl">Chỉ số kết quả</span>${t.goals.map(([b,s,e,w])=>`<div class="goal"><b class="${w?"w":""}">${esc(b)}</b><span>${esc(s)}</span><em>${esc(e)}</em></div>`).join("")}</div>`:"";
-  const rows=t.rows.map(r=>`<div class="row${r.off?" off":""}"><h3>${esc(r.h)}</h3>
-    ${r.f?`<div class="freq">${esc(r.f)}</div>`:""}
-    <p class="what">${esc(r.w)}${r.s?`<small>${esc(r.s)}</small>`:""}</p>
-    ${r.prog?`<div class="prog"><span class="bar"><i style="width:${Math.min(100,r.prog[0]/r.prog[1]*100)}%"></i></span><b>${r.prog[0]}/${r.prog[1]}</b>${esc(r.prog[2])}</div>`:""}
-    <div class="side">${status(r)}<div class="ppl">${r.who.length?r.who.map(person).join(""):`<span class="pp none">Chưa cần người phụ trách</span>`}</div></div></div>`).join("");
+  const t=TABS[cur], K="tab."+t.id;
+  const goals=t.goals.length?`<div class="goals"><span class="lbl">Chỉ số kết quả</span>${t.goals.map(([b,s,e,w],i)=>`<div class="goal"><b class="${w?"w":""}">${T(K+".goal"+i+".n",b)}</b><span>${T(K+".goal"+i+".l",s)}</span><em>${T(K+".goal"+i+".d",e)}</em></div>`).join("")}</div>`:"";
+  const rows=t.rows.map(r=>{const R="row."+r.id;return `<div class="row${r.off?" off":""}"><h3>${T(R+".h",r.h)}</h3>
+    ${r.f?`<div class="freq">${T(R+".f",r.f)}</div>`:""}
+    <p class="what">${T(R+".w",r.w)}${r.s?`<small>${T(R+".s",r.s)}</small>`:""}</p>
+    ${r.prog?`<div class="prog"><span class="bar"><i style="width:${Math.min(100,r.prog[0]/r.prog[1]*100)}%"></i></span><b>${r.prog[0]}/${r.prog[1]}</b>${T(R+".prog",r.prog[2])}</div>`:""}
+    <div class="side">${status(r)}<div class="ppl">${r.who.length?r.who.map((w,i)=>person(w,r,i)).join(""):`<span class="pp none">Chưa cần người phụ trách</span>`}</div></div></div>`}).join("");
   $("#panel").setAttribute("aria-labelledby","tab-"+t.id);
-  $("#panel").innerHTML=`<div class="wrap"><div class="intro"><div class="kicker">${esc(t.kicker)}</div><h2>${esc(t.title)}</h2><p>${esc(t.desc)}</p>${goals}</div><div class="rows">${rows}</div></div>`;
+  $("#panel").innerHTML=`<div class="wrap"><div class="intro"><div class="kicker">${T(K+".kicker",t.kicker)}</div><h2>${T(K+".title",t.title)}</h2><p>${T(K+".desc",t.desc)}</p><div class="lead-by"><span class="mk ok"></span>Lên plan &amp; duyệt: <b>Hào – Leader Marketing</b></div>${goals}</div><div class="rows">${rows}</div></div>`;
+  if(editing)armEditable();
 }
 function select(i,focus){
   cur=(i+TABS.length)%TABS.length;renderTabs();renderPanel();
   try{history.replaceState(null,"","#"+TABS[cur].id)}catch(e){}
   if(focus)$("#tab-"+TABS[cur].id).focus();
 }
-$("#tablist").addEventListener("click",e=>{const b=e.target.closest("[data-i]");if(!b)return;select(+b.dataset.i);
+$("#tablist").addEventListener("click",e=>{const b=e.target.closest("[data-i]");if(!b)return;if(editing&&+b.dataset.i===cur)return;select(+b.dataset.i);
   const top=$("#phan-cong").getBoundingClientRect().top;if(top<0)$("#phan-cong").scrollIntoView({block:"start"})});
 $("#tablist").addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();select(cur+1,true)}else if(e.key==="ArrowLeft"){e.preventDefault();select(cur-1,true)}});
+function armEditable(){}
 const fromHash=()=>{const i=TABS.findIndex(t=>"#"+t.id===location.hash);return i<0?0:i};
 addEventListener("hashchange",()=>{const i=TABS.findIndex(t=>"#"+t.id===location.hash);if(i>=0&&i!==cur){cur=i;renderTabs();renderPanel()}});
 cur=fromHash();renderTabs();renderPanel();
