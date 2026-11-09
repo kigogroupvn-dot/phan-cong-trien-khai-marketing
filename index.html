@@ -228,9 +228,8 @@ footer .logo{width:88px;color:var(--crimson)}
       <tr><td class="p"><i>L</i><div><b>Linh</b><small>Fanpage &amp; Threads</small></div></td><td><span class="mk sup">Hỗ trợ Kigo</span></td><td><span class="mk">14 bài</span></td><td></td><td><span class="mk">2 fanpage, IG Ninemila</span></td><td><span class="mk">Đại lý 1 bài</span></td><td></td><td class="num">23</td></tr>
       <tr><td class="p"><i>HD</i><div><b>Hà Digital</b><small>Tiktok, sàn, KOL</small></div></td><td><span class="mk">Kênh chị Loan</span></td><td></td><td><span class="mk">Tiktok Shop, KOL/KOC</span></td><td></td><td></td><td></td><td class="num na">Theo việc</td></tr>
       <tr><td class="p"><i>T</i><div><b>Thủy</b><small>Sàn Shopee</small></div></td><td></td><td></td><td><span class="mk">Shopee</span></td><td></td><td></td><td></td><td class="num na">Theo việc</td></tr>
-      <tr class="lead"><td class="p"><i>H</i><div><b>Hào</b><small>Leader Marketing · lên plan &amp; duyệt</small></div></td><td><span class="mk ok">Lên plan, duyệt 3 kênh</span></td><td><span class="mk ok">Duyệt content</span></td><td><span class="mk ok">Duyệt SIS, KOL/KOC</span></td><td><span class="mk ok">Duyệt bài &amp; ads</span></td><td><span class="mk">kigora.vn</span><span class="mk ok">Duyệt bài đại lý</span></td><td><span class="mk">4 skill, training</span></td><td class="num na">Toàn bộ kênh</td></tr>
-    </tbody></table></div>
-  <div class="legend"><span class="mk">Phụ trách chính</span><span class="mk sup">Hỗ trợ</span><span class="mk ok">Lên plan &amp; duyệt</span></div>
+      </tbody></table></div>
+  <div class="legend"><span class="mk">Phụ trách chính</span><span class="mk sup">Hỗ trợ</span></div>
 </section>
 
 <section class="sec wrap" id="nhip-noi-dung" aria-labelledby="h-rhythm">
@@ -320,7 +319,7 @@ const T=(k,d)=>`<span data-k="${k}">${esc(k in EDITS?EDITS[k]:d)}</span>`;
 const ROWS=Object.fromEntries(TABS.flatMap(t=>t.rows).map(r=>[r.id,r]));
 const lo=OUTPUT.reduce((x,o)=>x+o[2],0), hi=OUTPUT.reduce((x,o)=>x+o[3],0);
 
-function renderFigs(){$("#figs").innerHTML=[[Object.keys(ROWS).length,"đầu việc"],[Object.keys(P).length,"nhân sự phụ trách"],[lo+"–"+hi,"bài đăng mỗi tuần trên đa kênh"],["4","đề xuất cần phê duyệt"]].map(([a,b],i)=>`<div><dt>${T("fig"+i+".n",a)}</dt><dd>${T("fig"+i+".l",b)}</dd></div>`).join("")}
+function renderFigs(){$("#figs").innerHTML=[[Object.keys(ROWS).length,"đầu việc"],[Object.keys(P).filter(k=>k!=="hao").length,"nhân sự triển khai"],[lo+"–"+hi,"bài đăng mỗi tuần trên đa kênh"],["4","đề xuất cần phê duyệt"]].map(([a,b],i)=>`<div><dt>${T("fig"+i+".n",a)}</dt><dd>${T("fig"+i+".l",b)}</dd></div>`).join("")}
 const max=Math.max(...OUTPUT.map(o=>o[3]));
 function renderBars(){$("#bars").innerHTML=OUTPUT.map(([n,s,a,b],i)=>`<div class="brow"><div class="n"><b>${T("bar"+i+".n",n)}</b><small>${T("bar"+i+".s",s)}</small></div><div class="track" role="img" aria-label="${a===b?a:a+" đến "+b} bài mỗi tuần">${b>a?`<i class="r" style="width:${b/max*100}%"></i>`:""}<i style="width:${a/max*100}%"></i></div><div class="v">${a===b?a:a+"–"+b}</div></div>`).join("")}
 renderFigs();renderBars();
@@ -341,7 +340,7 @@ function renderPanel(){
     ${r.prog?`<div class="prog"><span class="bar"><i style="width:${Math.min(100,r.prog[0]/r.prog[1]*100)}%"></i></span><b>${r.prog[0]}/${r.prog[1]}</b>${T(R+".prog",r.prog[2])}</div>`:""}
     <div class="side">${status(r)}<div class="ppl">${r.who.length?r.who.map((w,i)=>person(w,r,i)).join(""):`<span class="pp none">Chưa cần người phụ trách</span>`}</div></div></div>`}).join("");
   $("#panel").setAttribute("aria-labelledby","tab-"+t.id);
-  $("#panel").innerHTML=`<div class="wrap"><div class="intro"><div class="kicker">${T(K+".kicker",t.kicker)}</div><h2>${T(K+".title",t.title)}</h2><p>${T(K+".desc",t.desc)}</p><div class="lead-by"><span class="mk ok"></span>Lên plan &amp; duyệt: <b>Hào – Leader Marketing</b></div>${goals}</div><div class="rows">${rows}</div></div>`;
+  $("#panel").innerHTML=`<div class="wrap"><div class="intro"><div class="kicker">${T(K+".kicker",t.kicker)}</div><h2>${T(K+".title",t.title)}</h2><p>${T(K+".desc",t.desc)}</p>${goals}</div><div class="rows">${rows}</div></div>`;
   if(editing)armEditable();
 }
 function select(i,focus){
